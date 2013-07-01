@@ -1,0 +1,206 @@
+\documentclass[a4paper, 12pt]{book}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% scaled-down header file of 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Christiane Peters
+% Curves, Codes, and Cryptography
+% Ph.D. thesis Technische Universiteit Eindhoven, May 2011
+% http://alexandria.tue.nl/extra2/711052.pdf
+% ISBN 978-90-386-2476-1 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the usual fonts
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb, amsfonts, amsmath, amsthm}
+\usepackage[english]{babel}
+\usepackage{ae, aecompl} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% color
+\usepackage{color}
+\definecolor{MyBlue}{rgb}{0.01,0.05,0.5}
+\definecolor{MyGreen}{rgb}{0.01,0.7,0.05}
+\definecolor{MyRed}{rgb}{0.7,0.01,0.05}
+\definecolor{blue}{rgb}{0.063,0.063,0.451}
+\definecolor{green}{RGB}{34,143,34}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% algorithm environments; I tweaked the algorithms2e style file for my
+% thesis; here I use only the standard one:
+\usepackage[noend,ruled,linesnumbered,algochapter]{algorithm2e}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PSTricks for drawing curves and all sorts of nice pictures
+\usepackage{pstricks, pst-plot, pst-node}
+% fancy diagrams with XY-Pic
+\usepackage[all]{xy}
+\usepackage{graphicx}
+% multirows for tables
+\usepackage{multirow}
+% tables which are too long to fit on one page
+\usepackage{longtable}
+% adjust caption for longtable
+\usepackage{caption}
+\captionsetup[longtable]{position=above}
+% rotate tables, figures which are too wide. For example: 
+%\begin{sidewaystable}
+%\end{sidewaystable}
+\usepackage{rotating}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% margins; indents
+\setlength{\parindent}{0pt}
+\setlength{\textwidth}{15cm}
+\setlength{\oddsidemargin}{0.5cm}
+\setlength{\evensidemargin}{0.5cm}
+\setlength{\topmargin}{0cm}
+\setlength{\textheight}{22.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% I tweaked the alpha bibliography style file to use the 
+% American "Ph.D." instead of British "PhD" in the category "phdthesis"
+% it's just a one-line change in the AMS is-alpha.bst file
+% default would be \bibliographystyle{alpha} or:
+\bibliographystyle{is-alpha}
+% using the biohazard symbol
+\usepackage{marvosym}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hyperrefs: all sorts of links in your thesis
+\usepackage[colorlinks=true, backref=page, linktocpage,
+%            linkcolor=MyRed, urlcolor=MyBlue, citecolor=MyGreen, 
+            linkcolor=black, urlcolor=black, citecolor=black, 
+			plainpages=false,pdfpagelabels,
+            pdftitle={Curves, Codes, and Cryptography}, 
+            pdfauthor={Christiane Peters}, pdfsubject={thesis}, 
+            pdfkeywords={Edwards curves, Code-based Cryptography},
+           ]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% there seems to be a clash somewhere: the standard "url" package was
+% not able to break url's over two lines. So I used the "breakurl" package:
+\usepackage{breakurl} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% back references; so bibitems end with (Cited on page/pages ...)
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+  \ifcase #1 %
+    (Not cited).
+  \or
+    (Cited on page~#2).%
+  \else
+    (Cited on pages~#2).
+  \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% use an index
+\usepackage{makeidx}
+\columnsep 40pt % more space between index columns
+% in text use as: \index{elliptic curve}{\em elliptic curve}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% use a list of symbols
+\usepackage{ifthen}
+\usepackage[refpage]{nomencl}
+% use backreferences for symbols 
+\renewcommand*{\pagedeclaration}[1]{\unskip, (defined on page\nobreakspace\hyperpage{#1})}
+\renewcommand{\nomname}{List of Symbols}
+\setlength{\nomlabelwidth}{1.5in} 
+% group symbols in three categories A,B,C; 
+% within categories entries are sorted alphabetically
+\renewcommand{\nomgroup}[1]{\medskip%
+\ifthenelse{\equal{#1}{A}}{\item[\textbf{Elliptic curves}]}{
+\ifthenelse{\equal{#1}{B}}{\item[\textbf{Cost of elliptic-curve arithmetic}]}{
+\ifthenelse{\equal{#1}{C}}{\item[\textbf{Code-based cryptography}]}{}}}}
+% in text use as: \nomenclature[AEd]{\ensuremath{E_d}}{Edwards curve with coefficient $d$}
+% or \nomenclature[CH]{\ensuremath{H_2}}{binary entropy function}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}} 
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\nouppercase\leftmark}
+\fancyhead[RE]{\nouppercase\rightmark}
+\setlength{\headheight}{15pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem environment
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defin}[thm]{Definition}
+\newtheorem{conj}[thm]{Conjecture}
+
+%\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{exmpl}[thm]{Example}
+\newcommand{\eref}[1]{(\ref{#1})}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% include all sorts of macros here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% chapterhead style
+\input{chapterhead}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tell latex to make an index/list of symbols
+\makeindex
+\makenomenclature
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\setcounter{page}{0}
+\pagenumbering{roman}
+
+\title{Curves, Codes, and Cryptography}
+\author{Christiane Peters}
+
+\include{pretitlepage}
+\include{titlepage}
+\include{dedicated}
+\include{thanks}
+
+\tableofcontents 
+\newpage
+\setcounter{page}{0}
+\pagenumbering{arabic}
+
+% include chapters/sections etc
+\include{introduction}
+\include{edwards}
+\include{cbc}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+% bibitems organized in refs.bib
+\bibliography{refs}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of symbols}
+\markboth{\nomname}{\nomname}
+\printnomenclature
+
+% you could also include a list of algorithms; probably you have to
+% add some makealgorithms command or so somewhere above
+%
+%\cleardoublepage
+%\phantomsection
+%\newcommand{\listalgorithmname}{List of algorithms}
+%\addcontentsline{toc}{chapter}{\listalgorithmname}
+%\listofalgorithms %\thispagestyle{empty}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Summary}
+\include{summary}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Curriculum Vitae}
+\include{cv-cpp}
+
+
+\end{document}
